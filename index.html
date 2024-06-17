@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="img/TECHZONE_logo.png"/>
+    <meta name="keywords" content="media, calcola, ossas, registro">
+    <meta name="description" content="Calcola la tua media con vari pesi dei voti">
+    <meta name="author" content="Ossas">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+            integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+    <title>Gym WorkOut</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Salva la tua scheda della palestra</h1>
+        <p>Gestisci i tuoi allenamenti e tieni traccia dei tuoi progressi.</p>
+        
+        <!-- Pulsante per aprire il modal di modifica -->
+        <button id="edit-schedule-btn" class="button">Modifica schede</button>
+
+        <!-- Modal per la modifica delle schede -->
+        <div id="edit-schedule-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Modifica schede</h2>
+                
+                <!-- Form per aggiungere esercizi -->
+                <form id="exercise-form">
+                    <input type="text" id="exercise-name" placeholder="Nome dell'esercizio" required>
+                    <input type="number" id="sets" placeholder="Serie">
+                    <input type="number" id="reps" placeholder="Ripetizioni">
+                    <button type="submit" class="button">Aggiungi esercizio</button>
+                </form>
+
+                <!-- Elenco esercizi -->
+                <h3>Esercizi</h3>
+                <ul id="exercise-list"></ul>
+
+                <!-- Form per selezionare e assegnare le giornate -->
+                <h3>Giornate di Allenamento</h3>
+                <div id="day-form">
+                    <select id="day-select" class="styled-select">
+                        <!-- Le giornate verranno aggiunte dinamicamente qui -->
+                    </select>
+                    <button type="button" id="add-day" class="button">Aggiungi Giornata</button>
+                    <button type="button" id="rename-day" class="button">Rinomina Giornata</button>
+                    <button type="button" id="remove-day" class="button"><i class="fas fa-trash"></i></button>
+                </div>
+
+                <!-- Selezione dei giorni per andare in palestra -->
+                <h3>Seleziona i giorni per andare in palestra</h3>
+                <div id="days-selection" class="styled-checkboxes">
+                    <label>Lunedì<input type="checkbox" value="1"></label>
+                    <label>Martedì<input type="checkbox" value="2"></label>
+                    <label>Mercoledì<input type="checkbox" value="3"></label>
+                    <label>Giovedì<input type="checkbox" value="4"></label>
+                    <label>Venerdì<input type="checkbox" value="5"></label>
+                    <label>Sabato<input type="checkbox" value="6"></label>
+                    <label>Domenica<input type="checkbox" value="0"></label>
+                </div>
+
+                <!-- Pulsanti per salvare la scheda -->
+                <button id="save-schedule" class="button">Salva scheda</button>
+            </div>
+        </div>
+
+        <!-- Scheda di oggi -->
+        <h2>Scheda di oggi</h2>
+        <div id="todays-schedule"></div>
+
+        <!-- Giorni passati dall'inizio -->
+        <p id="days-passed"></p>
+    </div>
+</body>
+</html>
