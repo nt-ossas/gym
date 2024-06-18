@@ -224,3 +224,15 @@ document.addEventListener('DOMContentLoaded', function () {
     assignScheduleToToday();
     setInitialCheckboxStates();
 });
+
+window.onload = function() {
+    var larghezzaPagina = window.innerWidth;
+    const alert = document.getElementById("alert");
+
+    if (larghezzaPagina > 800) {
+        alert.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Il sito non è ancora stato adattato per questo dispositivo. <i class="fa-solid fa-triangle-exclamation"></i>`;
+        alert.classList.add("container");
+        alert.style.color = "#ff5722";
+        alert("Attenzione, questo sito è sviluppato per essere visualizzato da dispositivi mobili, presto arriverà il restyle grafico anche per i dispositivi più larghi.");
+    }
+}
