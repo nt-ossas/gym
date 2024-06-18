@@ -54,6 +54,11 @@ p {
     line-height: 1.6;
 }
 
+input, textarea, select, button {
+    font-size: 16px; /* Imposta la dimensione del carattere desiderata */
+    touch-action: manipulation; /* Impedisce lo zoom su dispositivi touchscreen */
+}
+
 /* Pulsanti */
 .button {
     background-color: var(--accent-color);
