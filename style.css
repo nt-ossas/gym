@@ -85,10 +85,6 @@ li.ex {
     margin-left: -40px;
 }
 
-li.ex::before {
-    content: "- ";
-}
-
 .button:hover {
     background-color: var(--accent-hover);
     transform: scale(1.05);
@@ -149,9 +145,12 @@ a:hover {
 }
 
 .check-ex {
+    font-size: smaller;
+    padding-block: 6px;
     position: absolute;
-    right: 0;
-    width: 100px;
+    right: 40px !important;
+    width:18px;
+    margin-bottom: -2px;
 }
 
 @media screen and (max-width: 500px) {

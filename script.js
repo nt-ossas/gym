@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <label for="exercise-${i}">${e.name}${setsReps ? `: ${setsReps}` : ''}</label>
                         </div>
                     `;
-                }).join('<hr>')
+                }).join('<br>')
                 : 'Nessuna scheda assegnata per oggi';
 
             document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
