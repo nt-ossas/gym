@@ -94,6 +94,11 @@ li.ex::before {
     transform: scale(1.05);
 }
 
+footer{
+    color: var(--secondary-text);
+    font-size: small;
+}
+
 /* Input e Textarea */
 input, textarea {
     background-color: var(--secondary-bg);
