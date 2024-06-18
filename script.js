@@ -2,13 +2,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const exerciseForm = document.getElementById('exercise-form');
     const exerciseList = document.getElementById('exercise-list');
     const saveScheduleBtn = document.getElementById('save-schedule');
-    const daysSelection = document.getElementById('days-selection');
     const todaysSchedule = document.getElementById('todays-schedule');
     const daysPassedEl = document.getElementById('days-passed');
     const daySelect = document.getElementById('day-select');
     const addDayBtn = document.getElementById('add-day');
     const renameDayBtn = document.getElementById('rename-day');
-    const removeDayBtn = document.getElementById('remove-day'); // Nuovo pulsante
+    const removeDayBtn = document.getElementById('remove-day');
     const editScheduleBtn = document.getElementById('edit-schedule-btn');
     const editScheduleModal = document.getElementById('edit-schedule-modal');
     const closeEditModal = document.querySelector('.modal .close');
@@ -43,7 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 const li = document.createElement('li');
-                li.innerHTML = `${exercise.name}${setsReps ? `: ${setsReps}` : ''} <span data-index="${index}" class="remove-exercise"><i class="fas fa-trash button"></i></span>`;
+                li.classList.add("ex");
+                li.innerHTML = `${exercise.name}${setsReps ? `: ${setsReps}` : ''} <span data-index="${index}" class="remove-exercise"><i class="fas fa-trash button ex"></i></span>`;
                 exerciseList.appendChild(li);
             });
         }
@@ -77,10 +77,11 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('selectedDays', JSON.stringify(selectedDays));
         localStorage.setItem('exercises', JSON.stringify(exercises));
         localStorage.setItem('startDate', startDate);
-        alert('Scheda salvata!');
+        console.log('Giorni selezionati per la palestra:', selectedDays);
+        location.reload();
     });
 
-    removeDayBtn.addEventListener('click', function () { // Nuova funzione di rimozione
+    removeDayBtn.addEventListener('click', function () {
         const selectedDay = daySelect.value;
         if (selectedDay && exercises[selectedDay]) {
             delete exercises[selectedDay];
@@ -129,12 +130,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     closeEditModal.addEventListener('click', function () {
-        editScheduleModal.style.display = 'none';
+        location.reload();
     });
 
     window.addEventListener('click', function (event) {
         if (event.target === editScheduleModal) {
-            editScheduleModal.style.display = 'none';
+            location.reload();
         }
     });
 
@@ -145,6 +146,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const daysPassed = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
         const today = currentDate.getDay();
+
+        if (!selectedDays.includes(today)) {
+            todaysSchedule.textContent = 'Oggi non hai nessuna scheda salvata';
+            daysPassedEl.textContent = `Giorni passati dall'inizio: ${daysPassed}`;
+            return;
+        }
+
         const selectedDayIndex = selectedDays.indexOf(today);
         let todaysDay;
 
@@ -156,8 +164,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (todaysDay) {
             const todaysExercise = exercises[todaysDay];
-            todaysSchedule.innerHTML = todaysExercise 
-                ? todaysExercise.map(e => {
+            const completedExercises = JSON.parse(localStorage.getItem('completedExercises')) || {};
+            const todaysCompleted = completedExercises[todaysDay] || [];
+
+            todaysSchedule.innerHTML = `<h3>${todaysDay}</h3>`;
+            todaysSchedule.innerHTML += todaysExercise
+                ? todaysExercise.map((e, i) => {
                     let setsReps = '';
                     if (e.sets && e.reps) {
                         setsReps = `${e.sets} x ${e.reps}`;
@@ -166,9 +178,32 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else if (e.reps) {
                         setsReps = `${e.reps} ripetizioni`;
                     }
-                    return `${e.name}${setsReps ? `: ${setsReps}` : ''}`;
-                }).join('<br>')
+                    return `
+                        <div>
+                            <input type="checkbox" id="exercise-${i}" class="check-ex" data-index="${i}" ${todaysCompleted.includes(i) ? 'checked' : ''}>
+                            <label for="exercise-${i}">${e.name}${setsReps ? `: ${setsReps}` : ''}</label>
+                        </div>
+                    `;
+                }).join('<hr>')
                 : 'Nessuna scheda assegnata per oggi';
+
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', function () {
+                    const index = parseInt(this.dataset.index);
+                    if (this.checked) {
+                        if (!todaysCompleted.includes(index)) {
+                            todaysCompleted.push(index);
+                        }
+                    } else {
+                        const idx = todaysCompleted.indexOf(index);
+                        if (idx > -1) {
+                            todaysCompleted.splice(idx, 1);
+                        }
+                    }
+                    completedExercises[todaysDay] = todaysCompleted;
+                    localStorage.setItem('completedExercises', JSON.stringify(completedExercises));
+                });
+            });
         } else {
             todaysSchedule.textContent = 'Oggi non hai nessuna scheda salvata';
         }
@@ -176,6 +211,16 @@ document.addEventListener('DOMContentLoaded', function () {
         daysPassedEl.textContent = `Giorni passati dall'inizio: ${daysPassed}`;
     }
 
+    function setInitialCheckboxStates() {
+        const checkboxes = document.querySelectorAll('#days-selection input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            if (selectedDays.includes(parseInt(checkbox.value))) {
+                checkbox.checked = true;
+            }
+        });
+    }
+
     renderDayOptions();
     assignScheduleToToday();
+    setInitialCheckboxStates();
 });

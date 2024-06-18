@@ -26,35 +26,37 @@
 
         <!-- Modal per la modifica delle schede -->
         <div id="edit-schedule-modal" class="modal">
+            <!-- Form per aggiungere esercizi -->
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Modifica schede</h2>
-                
-                <!-- Form per aggiungere esercizi -->
                 <form id="exercise-form">
                     <input type="text" id="exercise-name" placeholder="Nome dell'esercizio" required>
                     <input type="number" id="sets" placeholder="Serie">
-                    <input type="number" id="reps" placeholder="Ripetizioni">
-                    <button type="submit" class="button">Aggiungi esercizio</button>
+                    <input type="text" id="reps" placeholder="Ripetizioni">
+                    <button type="submit" class="button icon"><i class="fa-solid fa-square-plus"></i></button>
                 </form>
-
                 <!-- Elenco esercizi -->
                 <h3>Esercizi</h3>
                 <ul id="exercise-list"></ul>
-
-                <!-- Form per selezionare e assegnare le giornate -->
-                <h3>Giornate di Allenamento</h3>
+            </div>
+            <!-- Form per selezionare e assegnare le giornate -->
+            <div class="modal-content">
+                <h2>Giornate di Allenamento</h2>
                 <div id="day-form">
                     <select id="day-select" class="styled-select">
                         <!-- Le giornate verranno aggiunte dinamicamente qui -->
                     </select>
-                    <button type="button" id="add-day" class="button">Aggiungi Giornata</button>
-                    <button type="button" id="rename-day" class="button">Rinomina Giornata</button>
-                    <button type="button" id="remove-day" class="button"><i class="fas fa-trash"></i></button>
+                    <div class="trio">
+                        <button type="button" id="add-day" class="button"><i class="fa-solid fa-square-plus"></i></button>
+                        <button type="button" id="rename-day" class="button"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button type="button" id="remove-day" class="button"><i class="fas fa-trash"></i></button>
+                    </div>
                 </div>
-
-                <!-- Selezione dei giorni per andare in palestra -->
-                <h3>Seleziona i giorni per andare in palestra</h3>
+            </div>
+            <!-- Selezione dei giorni per andare in palestra -->
+            <div class="modal-content">
+                <h2>Seleziona i giorni per andare in palestra</h2>
                 <div id="days-selection" class="styled-checkboxes">
                     <label>Lunedì<input type="checkbox" value="1"></label>
                     <label>Martedì<input type="checkbox" value="2"></label>
@@ -64,9 +66,7 @@
                     <label>Sabato<input type="checkbox" value="6"></label>
                     <label>Domenica<input type="checkbox" value="0"></label>
                 </div>
-
-                <!-- Pulsanti per salvare la scheda -->
-                <button id="save-schedule" class="button">Salva scheda</button>
+                <button id="save-schedule" class="button icon"><i class="fa-solid fa-floppy-disk"></i></button>
             </div>
         </div>
 

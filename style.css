@@ -1,31 +1,32 @@
 /* Colori di base */
 :root {
-    --primary-bg: #1a1a1a;
-    --secondary-bg: #2c2c2c;
+    --primary-bg: #121212;
+    --secondary-bg: #1e1e1e;
     --primary-text: #ffffff;
     --secondary-text: #b0b0b0;
     --accent-color: #ff5722;
     --accent-hover: #e64a19;
     --border-color: #444444;
+    --modal-bg: #2c2c2c;
 }
 
 /* Stili generali del corpo */
 body {
     background-color: var(--primary-bg);
     color: var(--primary-text);
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
 }
 
 /* Contenitori principali */
 .container {
-    width: 90%;
-    margin: 0 auto;
+    margin: 25px;
     padding: 20px;
     background-color: var(--secondary-bg);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 1s ease-in-out;
 }
 
 /* Titoli */
@@ -48,12 +49,31 @@ p {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
     margin-top: 10px;
+    display: inline-block;
+}
+
+.button.ex {
+    font-size: smaller;
+    padding-block: 6px;
+    position: absolute;
+    right: 40px;
+}
+
+li.ex {
+    margin-top: 20px;
+    list-style-type: none;
+    margin-left: -40px;
+}
+
+li.ex::before {
+    content: "- ";
 }
 
 .button:hover {
     background-color: var(--accent-hover);
+    transform: scale(1.05);
 }
 
 /* Input e Textarea */
@@ -65,10 +85,16 @@ input, textarea {
     border-radius: 5px;
     width: 90%;
     margin-bottom: 20px;
+    transition: border-color 0.3s ease;
 }
 
 input::placeholder, textarea::placeholder {
     color: var(--secondary-text);
+}
+
+input:focus, textarea:focus {
+    border-color: var(--accent-color);
+    outline: none;
 }
 
 /* Link */
@@ -89,11 +115,27 @@ a:hover {
     cursor: pointer;
     margin-bottom: 10px;
 }
-.styled-checkboxes input[type="checkbox"]{
+
+.styled-checkboxes input[type="checkbox"] {
+    font-size: smaller;
+    padding-block: 6px;
     position: absolute;
-    margin-top: 22px;
+    right: 50px;
+    width:18px;
+    margin-bottom: -2px;
 }
 
+.check-ex {
+    position: absolute;
+    right: 0;
+    width: 100px;
+}
+
+@media screen and (max-width: 500px) {
+    .check-ex {
+        right: 5%;
+    }
+}
 
 /* Stili per il modal */
 .modal {
@@ -105,21 +147,18 @@ a:hover {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
-}
-
-i.button{
-    margin-top: -2.5px;
+    background-color: rgba(0, 0, 0, .8);
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .modal-content {
-    background-color: #2c2c2c;
-    margin: 15% auto;
+    background-color: var(--modal-bg);
+    margin: 10% 5%;
     padding: 20px;
-    border-radius: 25px;
-    width: 80%;
-    max-width: 600px;
+    border-radius: 10px;
+    width: 79%;
+    max-width: 500px;
+    animation: slideDown 0.5s ease-in-out;
 }
 
 .close {
@@ -131,7 +170,7 @@ i.button{
 
 .close:hover,
 .close:focus {
-    color: black;
+    color: var(--accent-color);
     text-decoration: none;
     cursor: pointer;
 }
@@ -139,14 +178,15 @@ i.button{
 /* Stili per il select personalizzato */
 .styled-select {
     border: 0;
-    padding: 6px;
+    padding: 10px;
     border-radius: 5px;
-    width: auto;
-    max-width: 200px;
+    width: 100%;
+    max-width: 100%;
     cursor: pointer;
     font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--accent-color);
+    color: var(--primary-text);
+    margin-bottom: 20px;
 }
 
 .styled-select option {
@@ -154,35 +194,31 @@ i.button{
     color: #000;
 }
 
+.trio{
+    display: flex;
+    gap: 5%; 
+    margin-top: -20px;
+    width: 100%;
+}
+.trio .button{
+    width: 30% !important;
+}
+.icon{
+    width: 98%;
+}
+
 /* Stili per i pulsanti con icona */
-.button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px;
-    margin-top: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+i.button {
+    margin-top: -2.5px;
 }
 
-.button:hover {
-    background-color: #0056b3;
+/* Animazioni */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-/* Stili per l'icona del cestino */
-.fa-trash {
-    font-size: 1rem;
-    vertical-align: middle;
-}
-
-/* Stili per gli alert */
-.alert {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    font-size: 16px;
+@keyframes slideDown {
+    from { transform: translateY(-20px); }
+    to { transform: translateY(0); }
 }
