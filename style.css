@@ -153,12 +153,6 @@ a:hover {
     margin-bottom: -2px;
 }
 
-@media screen and (max-width: 500px) {
-    .check-ex {
-        right: 5%;
-    }
-}
-
 /* Stili per il modal */
 .modal {
     display: none; /* Nasconde il modal di default */
@@ -234,6 +228,10 @@ i.button {
     margin-top: -2.5px;
 }
 
+#todays-schedule h3{
+    border-bottom: 2px solid var(--border-color);
+}
+
 /* Animazioni */
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -243,4 +241,22 @@ i.button {
 @keyframes slideDown {
     from { transform: translateY(-20px); }
     to { transform: translateY(0); }
+}
+
+@media screen and (min-width: 500px) {
+    .container{
+        margin-inline: 30%;
+    }
+    .check-ex {
+        right: 32% !important;
+    }
+    .nav{
+        margin-inline: 36.5%;
+    }
+    .modal-content{
+        margin-inline: 35%;
+    }
+    .button.ex{
+        right: 37.5%;
+    }
 }
