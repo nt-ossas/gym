@@ -1,0 +1,21 @@
+{
+    "name": "SUW, Save Ur WorkOut",
+    "short_name": "SUW",
+    "start_url": ".",
+    "background_color": "#121212",
+    "theme_color": "#1e1e1e",
+    "description": "Gestisci i tuoi allenamenti e tieni traccia dei tuoi progressi.",
+    "display": "standalone",
+    "icons": [
+      {
+        "src": "img/logo.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      },
+      {
+        "src": "img/logo192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ] 
+}
