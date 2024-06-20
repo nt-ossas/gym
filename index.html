@@ -21,74 +21,79 @@
     <script src="js/index.js"></script>
 </head>
 <body>
-    <img src="img/slogan.png" class="nav">
-    <h1 id="alert"></h1>
-    <div class="container">
-        <h2>Salva la tua scheda della palestra</h2>
-        <p>Gestisci i tuoi allenamenti e tieni traccia dei tuoi progressi.</p>
-        
-        <!-- Pulsante per aprire il modal di modifica -->
-        <button id="edit-schedule-btn" class="button icon"><i class="fa-solid fa-pen-to-square"></i></button>
-
-        <!-- Modal per la modifica delle schede -->
-        <div id="edit-schedule-modal" class="modal">
-            <!-- Form per aggiungere esercizi -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Modifica scheda</h2>
-                <form id="exercise-form">
-                    <input type="text" id="exercise-name" placeholder="Nome dell'esercizio" required>
-                    <input type="number" id="sets" placeholder="Serie">
-                    <input type="text" id="reps" placeholder="Ripetizioni">
-                    <button type="submit" class="button icon"><i class="fa-solid fa-square-plus"></i></button>
-                </form>
-                <!-- Elenco esercizi -->
-                <h3>Esercizi</h3>
-                <ul id="exercise-list"></ul>
-            </div>
-            <!-- Form per selezionare e assegnare le giornate -->
-            <div class="modal-content">
-                <h2>Giornate di Allenamento</h2>
-                <div id="day-form">
-                    <select id="day-select" class="styled-select">
-                        <!-- Le giornate verranno aggiunte dinamicamente qui -->
-                    </select>
-                    <div class="trio">
-                        <button type="button" id="add-day" class="button"><i class="fa-solid fa-square-plus"></i></button>
-                        <button type="button" id="rename-day" class="button"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button type="button" id="remove-day" class="button"><i class="fas fa-trash"></i></button>
+    <div id="animation-container">
+        <img src="img/logo.png" id="img-logo">
+    </div>
+    <main>
+        <img src="img/slogan.png" class="nav">
+        <h1 id="alert"></h1>
+        <div class="container">
+            <h2>Salva la tua scheda della palestra</h2>
+            <p>Gestisci i tuoi allenamenti e tieni traccia dei tuoi progressi.</p>
+            
+            <!-- Pulsante per aprire il modal di modifica -->
+            <button id="edit-schedule-btn" class="button icon"><i class="fa-solid fa-pen-to-square"></i></button>
+    
+            <!-- Modal per la modifica delle schede -->
+            <div id="edit-schedule-modal" class="modal">
+                <!-- Form per aggiungere esercizi -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Modifica scheda</h2>
+                    <form id="exercise-form">
+                        <input type="text" id="exercise-name" placeholder="Nome dell'esercizio" required>
+                        <input type="number" id="sets" placeholder="Serie">
+                        <input type="text" id="reps" placeholder="Ripetizioni">
+                        <button type="submit" class="button icon"><i class="fa-solid fa-square-plus"></i></button>
+                    </form>
+                    <!-- Elenco esercizi -->
+                    <h3>Esercizi</h3>
+                    <ul id="exercise-list"></ul>
+                </div>
+                <!-- Form per selezionare e assegnare le giornate -->
+                <div class="modal-content">
+                    <h2>Giornate di Allenamento</h2>
+                    <div id="day-form">
+                        <select id="day-select" class="styled-select">
+                            <!-- Le giornate verranno aggiunte dinamicamente qui -->
+                        </select>
+                        <div class="trio">
+                            <button type="button" id="add-day" class="button"><i class="fa-solid fa-square-plus"></i></button>
+                            <button type="button" id="rename-day" class="button"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" id="remove-day" class="button"><i class="fas fa-trash"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Selezione dei giorni per andare in palestra -->
-            <div class="modal-content">
-                <h2>Seleziona i giorni per andare in palestra</h2>
-                <div id="days-selection" class="styled-checkboxes">
-                    <label>Lunedì<input type="checkbox" value="1"></label>
-                    <label>Martedì<input type="checkbox" value="2"></label>
-                    <label>Mercoledì<input type="checkbox" value="3"></label>
-                    <label>Giovedì<input type="checkbox" value="4"></label>
-                    <label>Venerdì<input type="checkbox" value="5"></label>
-                    <label>Sabato<input type="checkbox" value="6"></label>
-                    <label>Domenica<input type="checkbox" value="0"></label>
+                <!-- Selezione dei giorni per andare in palestra -->
+                <div class="modal-content">
+                    <h2>Seleziona i giorni per andare in palestra</h2>
+                    <div id="days-selection" class="styled-checkboxes">
+                        <label>Lunedì<input type="checkbox" value="1"></label>
+                        <label>Martedì<input type="checkbox" value="2"></label>
+                        <label>Mercoledì<input type="checkbox" value="3"></label>
+                        <label>Giovedì<input type="checkbox" value="4"></label>
+                        <label>Venerdì<input type="checkbox" value="5"></label>
+                        <label>Sabato<input type="checkbox" value="6"></label>
+                        <label>Domenica<input type="checkbox" value="0"></label>
+                    </div>
+                    <button id="save-schedule" class="button icon"><i class="fa-solid fa-floppy-disk"></i></button>
                 </div>
-                <button id="save-schedule" class="button icon"><i class="fa-solid fa-floppy-disk"></i></button>
             </div>
+    
+            <!-- Scheda di oggi -->
+            <h2>Scheda di oggi</h2>
+            <div id="todays-schedule"></div>
+    
+            <!-- Giorni passati dall'inizio -->
+            <p id="days-passed"></p>
         </div>
-
-        <!-- Scheda di oggi -->
-        <h2>Scheda di oggi</h2>
-        <div id="todays-schedule"></div>
-
-        <!-- Giorni passati dall'inizio -->
-        <p id="days-passed"></p>
-    </div>
-    <footer class="container">
-        <p style="text-align: center;">&copy; 2024 WebSite - SUW&reg; - Ossas</p>
-        <div style="display: flex; gap: 30%;margin-inline: 45%;">
-            <a href="mailto:ossasiocil@gmail.com" style="font-size: 18px; color: var(--secondary-text);padding-bottom: 10px;"><i class="fa-solid fa-envelope"></i></a>
-            <a href="https://discord.gg/gEXaNYF3st" style="font-size: 18px; color: var(--secondary-text);padding-bottom: 10px;"><i class="fa-brands fa-discord"></i></a>    
-        </div>
-    </footer>
+        <footer class="container">
+            <p style="text-align: center;">&copy; 2024 WebSite - SUW&reg; - Ossas</p>
+            <div style="display: flex; gap: 30%;margin-inline: 45%;">
+                <a href="mailto:ossasiocil@gmail.com" style="font-size: 18px; color: var(--secondary-text);padding-bottom: 10px;"><i class="fa-solid fa-envelope"></i></a>
+                <a href="https://discord.gg/gEXaNYF3st" style="font-size: 18px; color: var(--secondary-text);padding-bottom: 10px;"><i class="fa-brands fa-discord"></i></a>    
+            </div>
+        </footer>
+    </main>
 </body>
 </html>

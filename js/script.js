@@ -287,3 +287,14 @@ window.onload = function() {
 function broken(){
     alert("Questa funzione è ancora in fase di sviluppo, mi scuso per l'incoveniente!");
 }
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const animationContainer = document.getElementById("animation-container");
+    const content = document.getElementById("content");
+
+    setTimeout(function() {
+        animationContainer.style.display = "none";
+        content.style.display = "block";
+    }, 3000); // Attendi 3 secondi (3000 ms) per terminare l'animazione
+});
