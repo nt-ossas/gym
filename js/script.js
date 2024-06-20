@@ -361,7 +361,7 @@ document.addEventListener("DOMContentLoaded", function() {
         handleAnimation();
         localStorage.setItem('animationExecuted', true);
     } else {
-        const fifteenMinutes = 15 * 60 * 1000; // 15 minutes in milliseconds
+        const fifteenMinutes = 5 * 60 * 1000; // 15 minutes in milliseconds
         const currentTime = Date.now();
         const timeSinceLastAnimation = currentTime - parseInt(lastAnimationTime);
 
