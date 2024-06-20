@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const editScheduleBtn = document.getElementById('edit-schedule-btn');
     const editScheduleModal = document.getElementById('edit-schedule-modal');
     const closeEditModal = document.querySelector('.modal .close');
+    const button = document.getElementById("notification");
 
     let exercises = JSON.parse(localStorage.getItem('exercises')) || {};
     let selectedDays = JSON.parse(localStorage.getItem('selectedDays')) || [];
@@ -48,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 li.innerHTML = `${exercise.name}${setsReps ? `: ${setsReps}` : ''} <span data-index="${index}" class="remove-exercise"><i class="fas fa-trash button ex"></i></span>`;
                 exerciseList.appendChild(li);
 
-                // Add drag and drop event listeners
                 li.addEventListener('dragstart', handleDragStart);
                 li.addEventListener('dragover', handleDragOver);
                 li.addEventListener('drop', handleDrop);
@@ -125,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('selectedDays', JSON.stringify(selectedDays));
         localStorage.setItem('exercises', JSON.stringify(exercises));
         localStorage.setItem('startDate', startDate);
-        console.log('Giorni selezionati per la palestra:', selectedDays);
         location.reload();
     });
 
@@ -180,6 +179,29 @@ document.addEventListener('DOMContentLoaded', function () {
     closeEditModal.addEventListener('click', function () {
         location.reload();
     });
+
+    button.addEventListener("click", () => {
+        Notification.requestPermission().then(perm => {
+            var orario = document.getElementById("orario").value;
+            if (perm === "granted") {
+                new Notification("L'allenamento è stato impostato per le " + orario);
+    
+                if (selectedDays.includes(new Date().getDay())) {
+                    const notificationTime = new Date();
+                    notificationTime.setHours(parseInt(orario.split(":")[0]));
+                    notificationTime.setMinutes(parseInt(orario.split(":")[1]) - 30);
+                    const now = new Date();
+                    const timeUntilNotification = notificationTime - now;
+    
+                    if (timeUntilNotification > 0) {
+                        setTimeout(() => {
+                            new Notification("Ricorda di allenarti!", { body: `Allenamento programmato per le ${orario}` });
+                        }, timeUntilNotification);
+                    }
+                }
+            }
+        });
+    });    
 
     window.addEventListener('click', function (event) {
         if (event.target === editScheduleModal) {
@@ -296,5 +318,5 @@ document.addEventListener("DOMContentLoaded", function() {
     setTimeout(function() {
         animationContainer.style.display = "none";
         content.style.display = "block";
-    }, 3000); // Attendi 3 secondi (3000 ms) per terminare l'animazione
+    }, 3000);
 });
