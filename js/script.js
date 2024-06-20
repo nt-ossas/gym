@@ -332,44 +332,15 @@ window.onload = function() {
     }
 }
 
-function broken(){
-    alert("Questa funzione è ancora in fase di sviluppo, mi scuso per l'incoveniente!");
-}
-
-
 document.addEventListener("DOMContentLoaded", function() {
     const animationContainer = document.getElementById("animation-container");
     const content = document.querySelector("main");
+    
+    animationContainer.style.display = "block";
+    content.style.display = "none";
 
-    // Funzione per gestire l'animazione
-    function handleAnimation() {
-        animationContainer.style.display = "block";
-        content.style.display = "none";
-
-        setTimeout(function() {
-            animationContainer.style.display = "none";
-            content.style.display = "block";
-            localStorage.setItem('lastAnimationTime', Date.now());
-        }, 3000);
-    }
-
-    // Verifica se l'animazione è già stata eseguita e se è stato sufficiente tempo
-    const animationAlreadyExecuted = localStorage.getItem('animationExecuted');
-    const lastAnimationTime = localStorage.getItem('lastAnimationTime');
-
-    if (!animationAlreadyExecuted || !lastAnimationTime) {
-        handleAnimation();
-        localStorage.setItem('animationExecuted', true);
-    } else {
-        const fifteenMinutes = 5 * 60 * 1000; // 15 minutes in milliseconds
-        const currentTime = Date.now();
-        const timeSinceLastAnimation = currentTime - parseInt(lastAnimationTime);
-
-        if (timeSinceLastAnimation >= fifteenMinutes) {
-            handleAnimation();
-        } else {
-            animationContainer.style.display = "none";
-            content.style.display = "block";
-        }
-    }
+    setTimeout(function() {
+        animationContainer.style.display = "none";
+        content.style.display = "block";
+    }, 3000);
 });
