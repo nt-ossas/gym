@@ -20,7 +20,7 @@ body {
 }
 
 #animation-container {
-    position: absolute;
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,7 +34,7 @@ body {
     width: 250px;
     height: 250px;
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateY(100%), translateX(50%);
     animation: popUp 2s ease-in-out forwards;
 }
 
@@ -88,9 +88,13 @@ p {
     line-height: 1.6;
 }
 
-input, textarea, select, button {
+input, select, button {
     font-size: 16px; /* Imposta la dimensione del carattere desiderata */
     touch-action: manipulation; /* Impedisce lo zoom su dispositivi touchscreen */
+}
+
+#orario{
+    width: 95%;
 }
 
 /* Pulsanti */

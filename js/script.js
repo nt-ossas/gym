@@ -19,12 +19,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function renderDayOptions() {
         daySelect.innerHTML = '';
+        let hasDay1 = false;
         Object.keys(exercises).forEach(day => {
             const option = document.createElement('option');
             option.value = day;
             option.textContent = day;
             daySelect.appendChild(option);
+    
+            if (day === "Giornata 1") {
+                hasDay1 = true;
+            }
         });
+        if (!hasDay1) {
+            exercises["Giornata 1"] = [];
+            const option = document.createElement('option');
+            option.value = "Giornata 1";
+            option.textContent = "Giornata 1";
+            daySelect.appendChild(option);
+            localStorage.setItem('exercises', JSON.stringify(exercises));
+        }
+    
         renderExercises();
     }
 
@@ -180,28 +194,40 @@ document.addEventListener('DOMContentLoaded', function () {
         location.reload();
     });
 
-    button.addEventListener("click", () => {
+    //todo:
+    /*button.addEventListener("click", () => {
+        if (!("Notification" in window)) {
+            alert("Questo browser non supporta le notifiche push.");
+            return;
+        }
+    
         Notification.requestPermission().then(perm => {
-            var orario = document.getElementById("orario").value;
+            var orario = document.getElementById("orario").value.trim();
+            console.log(orario);
             if (perm === "granted") {
-                new Notification("L'allenamento è stato impostato per le " + orario);
+                new Notification("L'allenamento è stato impostato", { body: `Impostato per le ${orario}` });
+                console.log("Notifica di impostazione dell'allenamento mostrata.");
     
-                if (selectedDays.includes(new Date().getDay())) {
-                    const notificationTime = new Date();
-                    notificationTime.setHours(parseInt(orario.split(":")[0]));
-                    notificationTime.setMinutes(parseInt(orario.split(":")[1]) - 30);
-                    const now = new Date();
-                    const timeUntilNotification = notificationTime - now;
+                const selectedDays = [1, 2, 3, 4, 5]; // Esempio di giorni selezionati per la notifica
+                const now = new Date();
+                const notificationTime = new Date(orario);
     
-                    if (timeUntilNotification > 0) {
-                        setTimeout(() => {
-                            new Notification("Ricorda di allenarti!", { body: `Allenamento programmato per le ${orario}` });
-                        }, timeUntilNotification);
-                    }
+                // Calcolo del tempo fino alla notifica
+                const timeUntilNotification = notificationTime - now;
+    
+                if (timeUntilNotification > 0) {
+                    setTimeout(() => {
+                        new Notification("Ricorda di allenarti!", { body: `Allenamento programmato per le ${orario}` });
+                        console.log("Notifica di allenamento mostrata.");
+                    }, timeUntilNotification);
                 }
+            } else if (perm === "denied") {
+                console.log("L'utente ha negato il permesso per le notifiche.");
+            } else {
+                console.log("Il permesso per le notifiche è stato disabilitato dall'utente.");
             }
         });
-    });    
+    });*/
 
     window.addEventListener('click', function (event) {
         if (event.target === editScheduleModal) {
@@ -313,10 +339,37 @@ function broken(){
 
 document.addEventListener("DOMContentLoaded", function() {
     const animationContainer = document.getElementById("animation-container");
-    const content = document.getElementById("content");
+    const content = document.querySelector("main");
 
-    setTimeout(function() {
-        animationContainer.style.display = "none";
-        content.style.display = "block";
-    }, 3000);
+    // Funzione per gestire l'animazione
+    function handleAnimation() {
+        animationContainer.style.display = "block";
+        content.style.display = "none";
+
+        setTimeout(function() {
+            animationContainer.style.display = "none";
+            content.style.display = "block";
+            localStorage.setItem('lastAnimationTime', Date.now());
+        }, 3000);
+    }
+
+    // Verifica se l'animazione è già stata eseguita e se è stato sufficiente tempo
+    const animationAlreadyExecuted = localStorage.getItem('animationExecuted');
+    const lastAnimationTime = localStorage.getItem('lastAnimationTime');
+
+    if (!animationAlreadyExecuted || !lastAnimationTime) {
+        handleAnimation();
+        localStorage.setItem('animationExecuted', true);
+    } else {
+        const fifteenMinutes = 15 * 60 * 1000; // 15 minutes in milliseconds
+        const currentTime = Date.now();
+        const timeSinceLastAnimation = currentTime - parseInt(lastAnimationTime);
+
+        if (timeSinceLastAnimation >= fifteenMinutes) {
+            handleAnimation();
+        } else {
+            animationContainer.style.display = "none";
+            content.style.display = "block";
+        }
+    }
 });
