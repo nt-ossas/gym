@@ -52,6 +52,7 @@ h1, h2, h3 {
 p {
     color: var(--secondary-text);
     line-height: 1.6;
+    text-align: center;
 }
 
 input, textarea, select, button {

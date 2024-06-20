@@ -43,10 +43,58 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const li = document.createElement('li');
                 li.classList.add("ex");
+                li.draggable = true;
+                li.setAttribute('data-index', index);
                 li.innerHTML = `${exercise.name}${setsReps ? `: ${setsReps}` : ''} <span data-index="${index}" class="remove-exercise"><i class="fas fa-trash button ex"></i></span>`;
                 exerciseList.appendChild(li);
+
+                // Add drag and drop event listeners
+                li.addEventListener('dragstart', handleDragStart);
+                li.addEventListener('dragover', handleDragOver);
+                li.addEventListener('drop', handleDrop);
+                li.addEventListener('dragend', handleDragEnd);
             });
         }
+    }
+
+    function handleDragStart(e) {
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', e.target.getAttribute('data-index'));
+        e.target.classList.add('dragging');
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        const draggingElement = document.querySelector('.dragging');
+        const currentHoveredElement = e.target.closest('li.ex');
+        if (currentHoveredElement && currentHoveredElement !== draggingElement) {
+            const bounding = currentHoveredElement.getBoundingClientRect();
+            const offset = bounding.y + (bounding.height / 2);
+            const parent = currentHoveredElement.parentNode;
+            if (e.clientY - offset > 0) {
+                parent.insertBefore(draggingElement, currentHoveredElement.nextSibling);
+            } else {
+                parent.insertBefore(draggingElement, currentHoveredElement);
+            }
+        }
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        const draggedIndex = e.dataTransfer.getData('text/plain');
+        const dropTargetIndex = e.target.getAttribute('data-index');
+        if (draggedIndex !== dropTargetIndex) {
+            const selectedDay = daySelect.value;
+            const draggedExercise = exercises[selectedDay].splice(draggedIndex, 1)[0];
+            exercises[selectedDay].splice(dropTargetIndex, 0, draggedExercise);
+            localStorage.setItem('exercises', JSON.stringify(exercises));
+            renderExercises();
+        }
+    }
+
+    function handleDragEnd(e) {
+        e.target.classList.remove('dragging');
     }
 
     exerciseForm.addEventListener('submit', function (e) {
