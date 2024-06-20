@@ -233,6 +233,9 @@ window.onload = function() {
         alert.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Il sito non è ancora stato adattato per questo dispositivo. <i class="fa-solid fa-triangle-exclamation"></i>`;
         alert.classList.add("container");
         alert.style.color = "#ff5722";
-        alert("Attenzione, questo sito è sviluppato per essere visualizzato da dispositivi mobili, presto arriverà il restyle grafico anche per i dispositivi più larghi.");
     }
+}
+
+function broken(){
+    alert("Questa funzione è ancora in fase di sviluppo, mi scuso per l'incoveniente!");
 }
